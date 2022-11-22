@@ -1,0 +1,29 @@
+{
+  "name": "recruitment",
+  "version": "1.0.0",
+  "description": "Recruitment",
+  "dependencies": {
+    "bytes": "^3.1.2",
+    "cypress": "^10.8.0",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-multi-reporters": "^1.5.0",
+    "cypress-xpath": "^1.6.2",
+    "dayjs": "^1.11.0",
+    "mocha": "^9.1.3",
+    "mocha-junit-reporter": "^2.0.2",
+    "mochawesome": "^7.0.1",
+    "mochawesome-merge": "^4.2.1",
+    "mochawesome-report-generator": "^6.0.1",
+    "xlsx": "^0.18.5"
+  },
+  "scripts": {
+    "open": "cypress open",
+    "test": "npm run clean && cypress run; npm run report",
+    "clean": "rm -rf ./output",
+    "parse": "cd cypress/fixtures/car-policy-changes && node parser.mjs",
+    "report": "npm run report:merge-json && npm run report:generate-html && npm run report:copy-screenshots",
+    "report:merge-json": "npx mochawesome-merge ./output/json/*.json > ./output/output.json",
+    "report:generate-html": "npx mochawesome-report-generator output/output.json -o output/html --charts && npm run report:copy-screenshots",
+    "report:copy-screenshots": "if [ -d output/screenshots ]; then cp -r output/screenshots output/html/screenshots; fi"
+  }
+}
